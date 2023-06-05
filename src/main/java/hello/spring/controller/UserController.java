@@ -1,14 +1,11 @@
 package hello.spring.controller;
 
-import hello.spring.config.SessionConst;
 import hello.spring.dto.AuthInfo;
 import hello.spring.entity.User;
 import hello.spring.service.UserService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
@@ -22,7 +19,7 @@ public class UserController {
      private final UserService userService;
      
      @PostMapping ("/login")
-     public ResponseEntity<AuthInfo> postLogin(@ModelAttribute User user,
+     public ResponseEntity<AuthInfo> postLogin(@RequestBody User user,
                                                @RequestParam (value = "checker", required = false) String checker,
                                                HttpServletRequest request
           , HttpServletResponse response) {

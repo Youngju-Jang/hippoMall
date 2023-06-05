@@ -1,12 +1,11 @@
 package hello.spring.service;
 
-import hello.spring.config.SessionConst;
+import hello.spring.global.RestApiException;
 import hello.spring.data.UserMapper;
 import hello.spring.dto.AuthInfo;
+import hello.spring.global.dto.ErrorResult;
 import hello.spring.entity.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,18 +14,15 @@ public class UserService {
      private final UserMapper userMapper;
      
      public AuthInfo loginByNameAndPassword(String name, String password){
-          // exception handler 적용하기 & RestExceptionController
-          
           // 존재하지 않는 유저일경우
           if (!isExist(name)) {
-               // throw ~~exception
-               return null;
+               throw new RestApiException(ErrorResult.NO_USER);
           }
           User existUser = selectByName(name);
           
           // 비밀번호가 안맞을때
           if (!existUser.getPassword().equals(password)) {
-               // throw ~exception
+               throw new RestApiException(ErrorResult.WRONG_PASSWORD);
           }
           
           // 리액트랑 연동시 서버 세션에 저장이 가능한가 ??

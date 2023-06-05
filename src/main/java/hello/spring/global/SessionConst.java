@@ -1,4 +1,4 @@
-package hello.spring.config;
+package hello.spring.global;
 
 public class SessionConst {
      public static final String LOGIN_USER = "loginUser";

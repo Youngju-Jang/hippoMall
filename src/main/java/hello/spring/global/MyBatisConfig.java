@@ -1,4 +1,4 @@
-package hello.spring.config;
+package hello.spring.global;
 
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.beans.factory.annotation.Value;
