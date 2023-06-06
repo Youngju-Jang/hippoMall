@@ -1,6 +1,7 @@
 // src/main/frontend/src/App.js
 
 import React, {useEffect, useState} from 'react';
+import "./css/contents.css";
 import axios from 'axios';
 
 function App() {
