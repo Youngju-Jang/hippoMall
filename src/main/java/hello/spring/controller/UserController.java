@@ -29,7 +29,7 @@ public class UserController {
           Cookie cookie = new Cookie("name", name);
           cookie.setMaxAge((checker != null) ? 500 : 0);
           response.addCookie(cookie);
-          
+          System.out.println("name:" + name+ " , password: " + password);
           return new ResponseEntity<>(userService.loginByNameAndPassword(name, password), HttpStatus.OK);
      }
 }

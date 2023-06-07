@@ -49,7 +49,7 @@ html, body {width:100%; height:100%;}
 #header .gnb .gnbNavi {position:relative; width:100%; height:30px;}
 #header .gnb .gnbNavi li {float:left;}
 #header .gnb .gnbNavi li a {float:left; height:30px; line-height:30px; padding:0 50px; font-weight:bold; color:#000; background:url(../img/common/ln_gnb.gif) right center no-repeat;}
-#header .gnb .gnbNavi li a.last {background:url(../img/common/ln_gnb11.gif) right center no-repeat;}
+#header .gnb .gnbNavi li a.last {background:url(../img/common/ln_gnb.gif) right center no-repeat;}
 #header .gnb .gnbNavi li a:hover, #header .gnb .gnbNavi li a:active, 
 #header .gnb .gnbNavi li a.current, #header .gnb .gnbNavi li a.current:link, #header .gnb .gnbNavi li a.current:visited, #header .gnb .gnbNavi li a.current:hover {color:#FFF; background:#80bc00;}
 #header .gnb .gnbNavi li a:hover span, #header .gnb .gnbNavi li a:active span, 
