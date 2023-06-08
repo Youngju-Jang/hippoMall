@@ -1,6 +1,7 @@
 package hello.spring.data;
 
 import hello.spring.entity.User;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -12,4 +13,6 @@ public interface UserMapper {
      @Select("select user_id, name, password from users where name = #{name}")
      User selectByName(String name);
      
+     @Insert("insert into users(name, password) values (#{name}, #{password})")
+     void signupByUser(User user);
 }
