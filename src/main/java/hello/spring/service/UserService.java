@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -40,14 +41,14 @@ public class UserService {
           }
           userMapper.signupByUser(user); // 회원가입
           // 회원가입한 유저 id return
-          return (long)userMapper.selectByName(user.getName()).getUserId();
+          return (long)userMapper.findByUsername(user.getName()).get().getUserId();
      }
      public boolean isExist(String name) {
           return userMapper.isExist(name);
      }
      
      public User selectByName(String name) {
-          return userMapper.selectByName(name);
+          return userMapper.findByUsername(name).orElse(null);
      }
      
 }
