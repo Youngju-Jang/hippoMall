@@ -1,5 +1,6 @@
 package hello.spring.service;
 
+import hello.spring.dto.SignupRequestDto;
 import hello.spring.global.RestApiException;
 import hello.spring.data.UserMapper;
 import hello.spring.dto.AuthInfo;
@@ -7,6 +8,7 @@ import hello.spring.global.SessionConst;
 import hello.spring.global.dto.ErrorResult;
 import hello.spring.entity.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService {
      private final UserMapper userMapper;
+     private final PasswordEncoder passwordEncoder;
      
      public AuthInfo loginByNameAndPassword(String name, String password, HttpServletRequest request) {
           // 존재하지 않는 유저일경우
@@ -26,7 +29,7 @@ public class UserService {
           User existUser = selectByName(name);
           
           // 비밀번호가 안맞을때
-          if (!existUser.getPassword().equals(password)) {
+          if (!passwordEncoder.matches(password,existUser.getPassword())){
                throw new RestApiException(ErrorResult.WRONG_PASSWORD);
           }
           
@@ -35,13 +38,18 @@ public class UserService {
           return new AuthInfo(existUser.getUserId(), existUser.getName());
      }
      @Transactional // 회원가입
-     public Long signup(User user) {
-          if(isExist(user.getName())){ // 중복된 유저명인가
+     public Long signup(SignupRequestDto signupRequestDto) {
+          if(isExist(signupRequestDto.getName())){ // 중복된 유저명인가
                throw new RestApiException(ErrorResult.DUPLICATED_NAME);
           }
-          userMapper.signupByUser(user); // 회원가입
+          String name = signupRequestDto.getName();
+          String password = passwordEncoder.encode(signupRequestDto.getPassword());
+          String role = signupRequestDto.getRole();
+
+          userMapper.signupByUser(new User(name, password,role)); // 회원가입
+          
           // 회원가입한 유저 id return
-          return (long)userMapper.findByUsername(user.getName()).get().getUserId();
+          return (long)userMapper.findByUsername(name).get().getUserId();
      }
      public boolean isExist(String name) {
           return userMapper.isExist(name);

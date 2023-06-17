@@ -1,52 +1,61 @@
 package hello.spring.global.config;
 
+import hello.spring.global.security.UserDetailsServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity // 스프링 Security 지원을 가능하게 함
+@RequiredArgsConstructor
 public class SecurityConfig {
-     @Bean
-     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+     
+     private final UserDetailsServiceImpl userDetailsService;
+     
+     @Bean // 인증 및 권한 부여 규칙을 설정
+     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
           // cors 설정
           http.cors();
           // CSRF 설정
           http.csrf().disable();
+          http.csrf().ignoringAntMatchers("/**");
           
-          http
-               .authorizeHttpRequests((requests) -> requests
-                    .antMatchers("/user/**").permitAll()
-                    .anyRequest().authenticated()
-               )
-               .formLogin((form) -> form
-                    .loginPage("/user/login")
-                    .permitAll()
-               )
-               .logout(LogoutConfigurer::permitAll);
+//          http.authorizeHttpRequests()
+          http.authorizeRequests()
+               .antMatchers("/user/**").permitAll()
+//               .anyRequest().authenticated();
+          ;
+//               .and()
+//                    .formLogin()
+//                    .loginPage("/user/login")
+//                    .defaultSuccessUrl("/")
+//               .and()
+//                    .logout()
+//                    .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
+//                    .logoutSuccessUrl("/")
+//                    .invalidateHttpSession(true)
+//               .anyRequest().authenticated()
+//          ;
           
           return http.build();
      }
      
      @Bean // 비밀번호 암호화 기능 등록
      public PasswordEncoder passwordEncoder() {
-          return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+//          return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+          return new BCryptPasswordEncoder();
      }
      
-//     @Bean
-//     public UserDetailsService userDetailsService() {
-//          PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-//          UserDetails user = User.withUsername("user")
-//               .password(encoder.encode("password"))
-//               .roles("USER")
-//               .build();
-//
-//          return new InMemoryUserDetailsManager(user);
-//     }
+     @Bean
+     AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+          return authenticationConfiguration.getAuthenticationManager();
+     }
 }
 

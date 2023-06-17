@@ -1,6 +1,7 @@
 package hello.spring.controller;
 
 import hello.spring.dto.AuthInfo;
+import hello.spring.dto.SignupRequestDto;
 import hello.spring.entity.User;
 import hello.spring.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,7 @@ public class UserController {
      
      
      @PostMapping("/signup")
-     public ResponseEntity<Long> signup(@RequestBody User user){
-          return new ResponseEntity<>(userService.signup(user), HttpStatus.OK);
+     public ResponseEntity<Long> signup(@RequestBody SignupRequestDto signupRequestDto){
+          return new ResponseEntity<>(userService.signup(signupRequestDto), HttpStatus.OK);
      }
 }

@@ -1,7 +1,8 @@
 import React from "react";
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+// import { PostLogin } from '../services/api';
 
 import LoginButton from '../components/LoginButton';
 
@@ -13,8 +14,6 @@ const LoginbaseURL = axios.create({
     'Access-Control-Allow-Origin': '*',
   },
 });
-
-// 체크여부 확인하기 TODO
 
 const LoginForm = () => {
     const navigate = useNavigate();
@@ -40,9 +39,6 @@ const LoginForm = () => {
     }, []);
   
 
-    // const mutateLogin = useMutation({
-    //     mutationFn: PostLogin,
-    //   });
     const postLogin = async (userInfo) => {
       try {
         const response = await LoginbaseURL.post(LOGIN, userInfo);
@@ -72,7 +68,6 @@ const LoginForm = () => {
       };
 
       const onCheckerClick = (e) => {
-        console.log(e.target.checked);
         setChecker(e.target.checked);
       }
     return (
@@ -118,7 +113,7 @@ const LoginForm = () => {
                           checked={checker}
                           onClick={onCheckerClick}/>
                               {/* <img src="/resources/img/common/save_id.gif" alt="아이디 저장"/> */}
-                              <button type="button"><a href="/signup">회원가입</a></button>
+                              <button type="button"><Link to="/signup">회원가입</Link></button>
                         </div>
                   </fieldset>
             </div>

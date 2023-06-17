@@ -1,7 +1,7 @@
 import React from "react";
 import axios from 'axios';
 import { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const SIGNUP = '/user/signup';
 
@@ -96,7 +96,7 @@ const SignupForm = () => {
                         </dl>
                         <div className="btn">
                             <button onClick={handleClickSignup}>가입하기</button>
-                            <button type="button"><a href="/">로그인</a></button>
+                            <button type="button"><Link to="/">로그인</Link></button>
                         </div>
                   </fieldset>
             </div>

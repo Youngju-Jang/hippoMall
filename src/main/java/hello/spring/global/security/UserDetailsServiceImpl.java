@@ -17,11 +17,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      
      private final UserMapper repository;
      
+     // 인증이 필요한 UserDetails객체를 반환함
      @Override
      public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
           Optional<User> user = repository.findByUsername(username);
           
-          UserBuilder builder = null;
+          UserBuilder builder = null; // 인증할 사용자를 만들 때 사용
           if (user.isPresent()) {
                User currentUser = user.get();
                builder = org.springframework.security.core.userdetails.User.withUsername(username);
@@ -30,7 +31,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
           } else {
                throw new UsernameNotFoundException("User not found.");
           }
-          
           return builder.build();
      }
 }
