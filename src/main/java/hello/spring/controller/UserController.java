@@ -21,12 +21,11 @@ public class UserController {
      @PostMapping ("/login")
      public ResponseEntity<AuthInfo> postLogin(@RequestBody User user,
                                                @RequestParam (value = "checker", required = false) String checker,
-                                               HttpServletResponse response,
-                                               HttpServletRequest request) {
+                                               HttpServletResponse response) {
           String name = user.getName();
           String password = user.getPassword();
           
-          return new ResponseEntity<>(userService.loginByNameAndPassword(name, password, request), HttpStatus.OK);
+          return new ResponseEntity<>(userService.loginByNameAndPassword(name, password, response), HttpStatus.OK);
      }
      
      

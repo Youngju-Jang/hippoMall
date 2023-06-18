@@ -1,5 +1,7 @@
 package hello.spring.global.config;
 
+import hello.spring.global.security.JwtAuthFilter;
+import hello.spring.global.security.JwtUtil;
 import hello.spring.global.security.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -8,15 +10,18 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity // 스프링 Security 지원을 가능하게 함
 @RequiredArgsConstructor
 public class SecurityConfig {
      
+     private final JwtUtil jwtUtil;
      private final UserDetailsServiceImpl userDetailsService;
      
      @Bean // 인증 및 권한 부여 규칙을 설정
@@ -26,11 +31,13 @@ public class SecurityConfig {
           // CSRF 설정
           http.csrf().disable();
           http.csrf().ignoringAntMatchers("/**");
+          http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
           
 //          http.authorizeHttpRequests()
           http.authorizeRequests()
                .antMatchers("/user/**").permitAll()
-//               .anyRequest().authenticated();
+               .anyRequest().authenticated()
+               .and().addFilterBefore(new JwtAuthFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
           ;
 //               .and()
 //                    .formLogin()

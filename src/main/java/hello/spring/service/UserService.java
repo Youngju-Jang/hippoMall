@@ -7,34 +7,39 @@ import hello.spring.dto.AuthInfo;
 import hello.spring.global.SessionConst;
 import hello.spring.global.dto.ErrorResult;
 import hello.spring.entity.User;
+import hello.spring.global.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserService {
      private final UserMapper userMapper;
      private final PasswordEncoder passwordEncoder;
+     private final JwtUtil jwtUtil;
      
-     public AuthInfo loginByNameAndPassword(String name, String password, HttpServletRequest request) {
+     public AuthInfo loginByNameAndPassword(String name, String password,HttpServletResponse response) {
           // 존재하지 않는 유저일경우
           if (!isExist(name)) {
                throw new RestApiException(ErrorResult.NO_USER);
           }
           User existUser = selectByName(name);
-          
           // 비밀번호가 안맞을때
           if (!passwordEncoder.matches(password,existUser.getPassword())){
                throw new RestApiException(ErrorResult.WRONG_PASSWORD);
           }
+          response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(existUser.getName()));
           
-          // 리액트랑 연동시 서버 세션에 저장이 가능한가 ??
-          request.getSession().setAttribute(SessionConst.LOGIN_USER, existUser);
+//           리액트랑 연동시 서버 세션에 저장이 가능한가 ??
+//          request.getSession().setAttribute(SessionConst.LOGIN_USER, existUser);
           return new AuthInfo(existUser.getUserId(), existUser.getName());
      }
      @Transactional // 회원가입
