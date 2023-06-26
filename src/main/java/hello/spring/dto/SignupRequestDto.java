@@ -1,5 +1,6 @@
 package hello.spring.dto;
 
+import hello.spring.entity.UserRoleEnum;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,5 +11,5 @@ import lombok.Setter;
 public class SignupRequestDto {
      private String name;
      private String password;
-     private String role="USER";
+     private UserRoleEnum role= UserRoleEnum.USER;
 }

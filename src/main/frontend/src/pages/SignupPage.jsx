@@ -3,6 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import useTitle from "../util/useTitle.js";
+import LoginButton from "../components/LoginButton";
 
 const SIGNUP = "/user/signup";
 
@@ -33,21 +34,23 @@ const SignupForm = () => {
     setPasswordCheck(e.target.value);
   };
 
-  const postSignup = async (userInfo) => {
-    try {
-      await LoginbaseURL.post(SIGNUP, userInfo);
-      navigate("/");
-    } catch (err) {
-      if (err.response.status === 400) {
-        alert("이미 존재하는 아이디입니다.");
-      }
-      return;
-    }
+  const postSignup = (userInfo) => {
+    LoginbaseURL.post(SIGNUP, userInfo)
+      .then((response) => console.log(response))
+      .then((response) => {
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err?.response?.status === 400) {
+          alert("이미 존재하는 아이디입니다.");
+        }
+      });
+    return;
   };
 
   const handleClickSignup = () => {
     if (!(name && password && passwordCheck)) {
-      alert("name : " + name + " | " + password + " | " + passwordCheck);
       alert("빈칸을 채워주세요");
       return;
     }
@@ -57,13 +60,19 @@ const SignupForm = () => {
     }
     postSignup({ name, password });
   };
+
+  const backToLogin = () => {
+    navigate("/");
+  };
   return (
     <div id="loginWrapper">
       <div className="loginForm">
         <fieldset>
           <legend>관리자 시스템 로그인</legend>
           <dl>
-            {/* <dt><img src="/resources/img/common/th_id.gif" alt="아이디"/></dt> */}
+            <dt>
+              <img src={process.env.PUBLIC_URL + `/img/common/th_id.gif`} alt="아이디" />
+            </dt>
             <dd>
               <input
                 type="text"
@@ -74,7 +83,9 @@ const SignupForm = () => {
                 value={name}
               />
             </dd>
-            {/* <dt><img src="/resources/img/common/th_pw.gif" alt="비밀번호"/></dt> */}
+            <dt>
+              <img src={process.env.PUBLIC_URL + `/img/common/th_pw.gif`} alt="비밀번호" />
+            </dt>
             <dd>
               <input
                 type="password"
@@ -99,9 +110,11 @@ const SignupForm = () => {
           </dl>
           <div className="btn">
             <button onClick={handleClickSignup}>가입하기</button>
-            <button type="button">
-              <Link to="/">로그인</Link>
-            </button>
+            <div className="btn">
+              <button type="button" onClick={backToLogin}>
+                로그인
+              </button>
+            </div>
           </div>
         </fieldset>
       </div>

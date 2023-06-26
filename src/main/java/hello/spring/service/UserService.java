@@ -1,6 +1,7 @@
 package hello.spring.service;
 
 import hello.spring.dto.SignupRequestDto;
+import hello.spring.entity.UserRoleEnum;
 import hello.spring.global.RestApiException;
 import hello.spring.data.UserMapper;
 import hello.spring.dto.AuthInfo;
@@ -8,6 +9,7 @@ import hello.spring.global.SessionConst;
 import hello.spring.global.dto.ErrorResult;
 import hello.spring.entity.User;
 import hello.spring.global.security.JwtUtil;
+import hello.spring.global.security.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,6 +29,7 @@ public class UserService {
      private final JwtUtil jwtUtil;
      
      public AuthInfo loginByNameAndPassword(String name, String password,HttpServletResponse response) {
+          
           // 존재하지 않는 유저일경우
           if (!isExist(name)) {
                throw new RestApiException(ErrorResult.NO_USER);
@@ -49,7 +52,7 @@ public class UserService {
           }
           String name = signupRequestDto.getName();
           String password = passwordEncoder.encode(signupRequestDto.getPassword());
-          String role = signupRequestDto.getRole();
+          UserRoleEnum role = signupRequestDto.getRole();
 
           userMapper.signupByUser(new User(name, password,role)); // 회원가입
           

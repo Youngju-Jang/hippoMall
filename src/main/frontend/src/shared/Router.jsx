@@ -3,6 +3,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginForm from "../pages/LoginPage";
 import SignupForm from "../pages/SignupPage";
+import MainPage from "../pages/mainPage";
 
 // 2. Router 라는 함수를 만들고 아래와 같이 작성합니다.
 //BrowserRouter를 Router로 감싸는 이유는,
@@ -13,7 +14,7 @@ const Router = () => {
       <Routes>
         <Route path="/" element={<LoginForm />} />
         <Route path="/signup" element={<SignupForm />} />
-        <Route path="/main" element={<LoginForm />} />
+        <Route path="/main" element={<MainPage />} />
       </Routes>
     </BrowserRouter>
   );
