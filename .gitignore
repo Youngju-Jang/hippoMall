@@ -11,6 +11,9 @@
 # testing
 /coverage
 
+
+.idea/
+.gradle/
 # production
 /build
 */build
@@ -75,8 +78,7 @@ yarn-error.log*
 # Gradle
 .idea/**/gradle.xml
 .idea/**/libraries
-.idea
-.gradle
+
 
 # Gradle and Maven with auto-import
 # When using Gradle or Maven with auto-import, you should exclude module files,
