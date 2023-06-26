@@ -12,12 +12,14 @@
 /coverage
 
 
-.idea/
-.gradle/
+.idea/**
+.gradle/**
+
 # production
 /build
 */build
 build
+build/**
 
 # misc
 .DS_Store
