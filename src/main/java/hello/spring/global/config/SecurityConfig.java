@@ -30,7 +30,6 @@ public class SecurityConfig {
           http.cors();
           // CSRF 설정
           http.csrf().disable();
-          http.csrf().ignoringAntMatchers("/**");
           http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
           
 //          http.authorizeHttpRequests()

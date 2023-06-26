@@ -23,7 +23,7 @@ public class User {
      private String password;
      
      @Column(nullable = false)
-     private String role = "ROLE_USER";
+     private String role = "USER";
      public User(String name, String password, String role){
           this.name = name;
           this.password = password;

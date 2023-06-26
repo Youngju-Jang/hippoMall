@@ -10,5 +10,5 @@ import lombok.Setter;
 public class SignupRequestDto {
      private String name;
      private String password;
-     private String role="ROLE_USER";
+     private String role="USER";
 }
