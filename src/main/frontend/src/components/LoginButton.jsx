@@ -1,10 +1,19 @@
-import React from 'react';
+import React from "react";
 
 export default function LoginButton({ loginInputField, onClickLogin }) {
   const { name, password } = loginInputField;
   return (
-          <button type="button" onClick={() => onClickLogin({ name, password })}>
-          로그인
-          </button>
-      );
+    <dt>
+      <img
+        onClick={() => onClickLogin({ name, password })}
+        id="btnSubmit"
+        src={process.env.PUBLIC_URL + `/img/button/btn_login.gif`}
+        alt="LOGIN"
+        title="LOGIN"
+      />
+    </dt>
+    // <button type="button" onClick={() => onClickLogin({ name, password })}>
+    // 로그인
+    // </button>
+  );
 }

@@ -76,7 +76,10 @@ const LoginForm = () => {
         <fieldset>
           <legend>관리자 시스템 로그인</legend>
           <dl>
-            {/* <dt><img src="/resources/img/common/th_id.gif" alt="아이디"/></dt> */}
+            {/* <img src={process.env.PUBLIC_URL + `assets/emotion${emotion}.png`} /> */}
+            <dt>
+              <img src={process.env.PUBLIC_URL + `/img/common/th_id.gif`} alt="아이디" />
+            </dt>
             <dd>
               <input
                 type="text"
@@ -87,8 +90,9 @@ const LoginForm = () => {
                 value={name}
               />
             </dd>
-
-            {/* <dt><img src="/resources/img/common/th_pw.gif" alt="비밀번호"/></dt> */}
+            <dt>
+              <img src={process.env.PUBLIC_URL + `/img/common/th_pw.gif`} alt="비밀번호" />
+            </dt>
             <dd>
               <input
                 type="password"
@@ -102,7 +106,6 @@ const LoginForm = () => {
           </dl>
           <div className="btn">
             <LoginButton loginInputField={state} onClickLogin={handleClickLogin} />
-            {/* <img id="btnSubmit" src="/resources/img/button/btn_login.gif" alt="LOGIN" title="LOGIN"/> */}
           </div>
 
           <div className="saveId">
@@ -113,7 +116,8 @@ const LoginForm = () => {
               checked={checker}
               onClick={onCheckerClick}
             />
-            {/* <img src="/resources/img/common/save_id.gif" alt="아이디 저장"/> */}
+            <img src={process.env.PUBLIC_URL + `/img/common/save_id.gif`} alt="아이디 저장" />
+
             <button type="button">
               <Link to="/signup">회원가입</Link>
             </button>
