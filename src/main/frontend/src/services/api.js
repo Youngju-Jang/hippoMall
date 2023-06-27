@@ -1,6 +1,6 @@
 import axios from "axios";
 import { loadItem, saveItem } from "./storage";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const LOGIN = "/user/login";
 
@@ -19,7 +19,7 @@ const LoginbaseURL = axios.create({
   },
 });
 
-export const postLogin = (userInfo, checker) => {
+export const postLogin = (userInfo, checker, navigate) => {
   LoginbaseURL.post(LOGIN, userInfo)
     .then((response) => {
       // 쿠키 이름을 "name"으로 설정하고, 1시간 동안 유지되도록 설정
@@ -36,14 +36,14 @@ export const postLogin = (userInfo, checker) => {
         localStorage.removeItem("name");
         localStorage.removeItem("checker");
       }
-      return "/main";
+      navigate("/main");
     })
     .catch((err) => {
       console.log(err);
       if (err?.response?.status === 400) {
         alert(`${err?.response?.data?.statusMsg}`);
       }
-      return "/";
+      navigate("/");
     });
 };
 

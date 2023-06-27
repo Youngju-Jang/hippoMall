@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import useTitle from "../util/useTitle.js";
 
-// import { PostLogin } from '../services/api';
+// import { callPostLogin } from '../services/api';
 
 import LoginButton from "../components/LoginButton";
 import { postLogin } from "../services/api.js";
@@ -44,10 +44,10 @@ const LoginForm = () => {
   }, []);
 
   const callPostLogin = (userInfo) => {
-    navigate(postLogin(userInfo, checker));
+    postLogin(userInfo, checker, navigate);
   };
 
-  // const postLogin = (userInfo) => {
+  // const callPostLogin = (userInfo) => {
   //   LoginbaseURL.post(LOGIN, userInfo)
   //     .then((response) => {
   //       // 쿠키 이름을 "name"으로 설정하고, 1시간 동안 유지되도록 설정
