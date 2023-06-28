@@ -1,7 +1,7 @@
 package hello.spring.global.security;
 
 import hello.spring.entity.User;
-import hello.spring.data.UserMapper;
+import hello.spring.data.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,7 +15,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
      
-     private final UserMapper repository;
+     private final UserRepository repository;
      
      // 인증이 필요한 UserDetails객체를 반환함
      @Override

@@ -3,28 +3,24 @@ package hello.spring.service;
 import hello.spring.dto.SignupRequestDto;
 import hello.spring.entity.UserRoleEnum;
 import hello.spring.global.RestApiException;
-import hello.spring.data.UserMapper;
+import hello.spring.data.UserRepository;
 import hello.spring.dto.AuthInfo;
-import hello.spring.global.SessionConst;
 import hello.spring.global.dto.ErrorResult;
 import hello.spring.entity.User;
 import hello.spring.global.security.JwtUtil;
-import hello.spring.global.security.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Optional;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserService {
-     private final UserMapper userMapper;
+     private final UserRepository userMapper;
      private final PasswordEncoder passwordEncoder;
      private final JwtUtil jwtUtil;
      
