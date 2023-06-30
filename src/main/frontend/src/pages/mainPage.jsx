@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import Title from "../components/Title";
 import Button from "../components/Button";
 
 const MainPage = () => {
+  const [state, setState] = useState({
+    search: "",
+    option: "",
+  });
+
+  const Search = () => {
+    // 검색했을때 링크
+  };
+
+  
+
   return (
     <div id="wrap">
       <div id="sub_container">
@@ -11,6 +22,7 @@ const MainPage = () => {
             <Title>상품 등록/보기/수정</Title>
 
             <div className="contents">
+              {/* 헤더 버튼세트 */}
               <div className="btnSet clfix mgb15">
                 <span className="fr">
                   <Button>목록</Button>
@@ -18,7 +30,9 @@ const MainPage = () => {
                   <Button href="/product/add">등록 / 수정</Button>
                 </span>
               </div>
-              <form action="clientList.do" method="post" name="search">
+              {/* 헤더 버튼세트 */}
+              {/* 검색라인 */}
+              <form method="post" name="search">
                 <table className="bbsWrite mgb35">
                   <caption></caption>
                   <colgroup>
@@ -36,7 +50,14 @@ const MainPage = () => {
                         </select>
                       </td>
                       <th>
-                        <select id="query" name="query">
+                        <select
+                          id="query"
+                          name="query"
+                          value={state.option}
+                          onChange={(e) => {
+                            setState({ ...state, option: e.target.value });
+                          }}
+                        >
                           <option selected="selected" value="">
                             선택하세요
                           </option>
@@ -47,13 +68,16 @@ const MainPage = () => {
                       </th>
                       <td>
                         <input
+                          value={state.search}
+                          onChange={(e) => {
+                            setState({ ...state, search: e.target.value });
+                          }}
                           type="text"
-                          name="data"
                           style={{ border: "1px solid #ddd", height: "20px" }}
                           className="inputText"
                           size="30"
                         />
-                        <Button id="search">검색</Button>
+                        <Button onClick={Search}>검색</Button>
                         <Button href="/product" id="reset">
                           새로고침
                         </Button>
@@ -62,6 +86,8 @@ const MainPage = () => {
                   </tbody>
                 </table>
               </form>
+              {/* 검색라인 */}
+              {/* 리스트 본문 */}
               <form
                 action="${pageContext.request.contextPath}/cart/add"
                 method="post"
@@ -127,6 +153,7 @@ const MainPage = () => {
                   </tbody>
                 </table>
               </form>
+              {/* 리스트 본문 */}
               <br />
               <Button id="showMore">더보기</Button>
             </div>

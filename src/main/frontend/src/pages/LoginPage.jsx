@@ -9,15 +9,6 @@ import useTitle from "../util/useTitle.js";
 import LoginButton from "../components/LoginButton";
 import { postLogin } from "../services/api.js";
 
-const LOGIN = "/user/login";
-
-const LoginbaseURL = axios.create({
-  baseURL: "http://localhost:8080/",
-  headers: {
-    "Access-Control-Allow-Origin": "*",
-  },
-});
-
 const LoginForm = () => {
   useTitle("Login");
 
